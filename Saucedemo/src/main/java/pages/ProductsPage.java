@@ -1,6 +1,7 @@
 package pages;
 
 import java.util.List;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -36,19 +37,25 @@ public class ProductsPage extends Base
 	public String[] Addtocart()
 	{
 		String first[]=new String[2];
-		first[0]=driver.findElement(By.xpath("//div[text()='Sauce Labs Backpack']")).getText();
-		first[1]=driver.findElement(By.xpath("//div[text()='Sauce Labs Bolt T-Shirt']")).getText();
-		driver.findElement(By.xpath("(//button[text()='Add to cart'])[1]")).click();
-		driver.findElement(By.xpath("(//button[text()='Add to cart'])[3]")).click();
-				return first;
+		int n;
+		
+			first[0]=driver.findElement(By.xpath("(//button[text()='Add to cart'])["+3+"]/ancestor::div[2]/div[1]/a")).getText();
+			driver.findElement(By.xpath("(//button[text()='Add to cart'])["+3+"]")).click();	
+			first[1]=driver.findElement(By.xpath("(//button[text()='Add to cart'])["+5+"]/ancestor::div[2]/div[1]/a")).getText();
+			driver.findElement(By.xpath("(//button[text()='Add to cart'])["+5+"]")).click();			
+		
+		return first;
 	}
 	public String[] yourcart()
 	{
 		driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).click();
-		//try {Thread.sleep(3000);} catch(Exception e) {}
+		try {Thread.sleep(3000);} catch(Exception e) {}
 		String second[]=new String[2];
-		second[0]=driver.findElement(By.xpath("//div[text()='Sauce Labs Backpack']")).getText();
-		second[1]=driver.findElement(By.xpath("//div[text()='Sauce Labs Bolt T-Shirt']")).getText();
+		List<WebElement> items= driver.findElements(By.xpath("//div[@class='inventory_item_name']"));
+		for(int i=0;i<items.size();i++)
+		{
+			second[i]=items.get(i).getText();
+		}		
 		return second;
 
 	}
